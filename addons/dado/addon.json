@@ -1,0 +1,20 @@
+{
+  "id": "dado",
+  "nombre": { "es": "Dado", "en": "Dice", "ja": "サイコロ", "ko": "주사위" },
+  "descripcion": {
+    "es": "Tira un dado de seis caras. También puede tirarlo tu IA por MCP.",
+    "en": "Roll a six-sided die. Your AI can roll it too, over MCP.",
+    "ja": "6面のサイコロを振ります。AIもMCPで振れます。",
+    "ko": "6면 주사위를 굴립니다. AI도 MCP로 굴릴 수 있습니다."
+  },
+  "version": "0.1.0",
+  "panel": { "ancho": 300, "alto": 132 },
+  "icono": "M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3 3.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm8 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-4 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-4 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm8 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z",
+  "herramientas": [
+    {
+      "nombre": "tirar",
+      "descripcion": "Tira el dado de la barra de nook y devuelve el número que sale (1-6). Se ve en la barra del usuario.",
+      "parametros": { "type": "object", "properties": {} }
+    }
+  ]
+}

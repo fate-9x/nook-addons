@@ -1,0 +1,55 @@
+// Dado: el número que salió, quién lo tiró y las últimas tiradas.
+import { Tema } from "@nook/tema.slint";
+import { BotonTexto } from "@nook/controles.slint";
+
+export component Panel inherits Window {
+    background: transparent;
+    in property <int> numero: 0;          // 0 = todavía no se ha tirado
+    in property <string> quien;           // "" o el texto de quién lo tiró
+    in property <string> historial;
+    in property <string> texto-boton: "Tirar";
+    callback tirar();
+
+    // Cara del dado.
+    Rectangle {
+        x: 16px;
+        y: 16px;
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+        background: Tema.acento;
+        Text {
+            text: root.numero == 0 ? "?" : root.numero;
+            color: Tema.sobre-acento;
+            font-size: 34px;
+            font-weight: 800;
+            horizontal-alignment: center;
+            vertical-alignment: center;
+        }
+    }
+    Text {
+        x: 96px;
+        y: 18px;
+        width: parent.width - 112px;
+        text: root.quien;
+        color: Tema.texto-suave;
+        font-size: 12px;
+        overflow: elide;
+    }
+    BotonTexto {
+        x: 96px;
+        y: 44px;
+        width: 120px;
+        texto: root.texto-boton;
+        clicked => { root.tirar(); }
+    }
+    Text {
+        x: 16px;
+        y: 96px;
+        width: parent.width - 32px;
+        text: root.historial;
+        color: Tema.texto-tenue;
+        font-size: 12px;
+        overflow: elide;
+    }
+}
