@@ -2,6 +2,30 @@
   "version": 1,
   "addons": [
     {
+      "id": "batalla-naval",
+      "nombre": {
+        "es": "Batalla naval",
+        "en": "Battleship",
+        "ja": "海戦ゲーム",
+        "ko": "해전 게임"
+      },
+      "descripcion": {
+        "es": "Hunde la flota de nook o la de tu IA, que juega por MCP.",
+        "en": "Sink nook's fleet, or your AI's, which plays over MCP.",
+        "ja": "nookの艦隊か、MCPで遊ぶAIの艦隊を撃沈しよう。",
+        "ko": "nook의 함대나 MCP로 플레이하는 AI의 함대를 격침하세요."
+      },
+      "version": "0.1.0",
+      "nook_minimo": "0.3.0",
+      "icono": "M2 14h20l-2.6 5.2A1.5 1.5 0 0 1 18 20H6a1.5 1.5 0 0 1-1.4-.8L2 14zm4-4h9v3H6v-3zm2-3.5h4v3H8v-3zM10 3h1.2v3.5H10V3zm5.5 8h5v1.2h-5V11z",
+      "tag": "batalla-naval-v0.1.0",
+      "archivos": {
+        "addon.json": "c1265427e19eebd3c513876a38b1a12598031332c9d13a068cb8769b4b410d33",
+        "logica.rhai": "6bb8f9ff01141da1e31467dd94ad5f3b2e5ab6b5d71e1772fa4fc1d11e639c82",
+        "panel.slint": "f606c271dec5fa511b33a34abee91a97c8fa88c02d1d578b4d990c77ed7c4fd9"
+      }
+    },
+    {
       "id": "dado",
       "nombre": {
         "es": "Dado",
