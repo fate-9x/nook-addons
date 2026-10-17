@@ -1,7 +1,7 @@
-# Addons de nook
+# Addons de Nookly
 
-Addons para [nook](https://github.com/fate-9x/nook): paneles que se añaden a la barra (minijuegos,
-herramientas…) y que solo se cargan al abrirlos. Se instalan desde la configuración de nook, en la
+Addons para [Nookly](https://github.com/fate-9x/nook): paneles que se añaden a la barra (minijuegos,
+herramientas…) y que solo se cargan al abrirlos. Se instalan desde la configuración de Nookly, en la
 sección **Addons**.
 
 ## Cómo es un addon
@@ -32,9 +32,9 @@ Cada addon está en `addons/<id>/`:
 ```
 
 - `id`: el nombre de su carpeta (minúsculas, números y `-`).
-- `nook_minimo` (opcional): la primera versión de nook con la que funciona. Las anteriores lo
+- `nook_minimo` (opcional): la primera versión de Nookly con la que funciona. Las anteriores lo
   muestran como incompatible y no lo dejan instalar.
-- `icono`: un trazado SVG relleno en una caja de 24×24; nook lo pinta del color del tema.
+- `icono`: un trazado SVG relleno en una caja de 24×24; Nookly lo pinta del color del tema.
 - `herramientas`: lo que puede usar la IA del usuario por MCP (ver más abajo). Los parámetros son
   un JSON Schema.
 
@@ -56,13 +56,13 @@ export component Panel inherits Window {
 
 - `@nook/tema.slint` tiene los colores del usuario (`Tema.fondo`, `Tema.acento`, `Tema.texto`,
   `Tema.texto-suave`…); `@nook/controles.slint` e `@nook/iconos.slint`, los botones e iconos de
-  nook.
+  Nookly.
 - Solo se pueden usar archivos de la propia carpeta del addon.
 
 ### `logica.rhai`
 
 Cada `callback` del panel llama a la función del script con el mismo nombre (con `_` en vez de
-`-`). Las funciones tienen en `this` el estado del addon, que dura mientras nook está abierto:
+`-`). Las funciones tienen en `this` el estado del addon, que dura mientras Nookly está abierto:
 
 ```rhai
 fn tirar() {
@@ -74,7 +74,7 @@ fn tirar() {
 | Función | Qué hace |
 |---|---|
 | `poner("propiedad", valor)`, `leer("propiedad")` | Cambia o lee una propiedad del panel. |
-| `guardar(valor)`, `cargar()` | Datos que se conservan al cerrar nook. |
+| `guardar(valor)`, `cargar()` | Datos que se conservan al cerrar Nookly. |
 | `azar()` | Un número entre 0 y 1. |
 | `tras(milisegundos, "funcion")` | Llama a esa función pasado ese tiempo. |
 | `personaje("rebote")`, `personaje("aviso")` | El personaje de nook reacciona. |
@@ -95,8 +95,8 @@ operaciones por llamada.
 
 ### Herramientas MCP
 
-nook hace de servidor MCP (`nook.exe --mcp`) para la IA del usuario (Claude Desktop, Claude
-Code…). Por cada herramienta del manifiesto, la IA ve `<id>__<nombre>`, y al usarla nook llama a
+Nookly hace de servidor MCP (`nook.exe --mcp`) para la IA del usuario (Claude Desktop, Claude
+Code…). Por cada herramienta del manifiesto, la IA ve `<id>__<nombre>`, y al usarla Nookly llama a
 `herramienta_<nombre>(argumentos)` del script. Lo que devuelve (un texto o un mapa) es la respuesta
 para la IA.
 
@@ -107,7 +107,7 @@ intentarlo).
 
 ## Probar un addon
 
-Copia su carpeta a `%APPDATA%\nook\addons\<id>\` y abre nook: sale en la tira de la barra. Los
+Copia su carpeta a `%APPDATA%\nook\addons\<id>\` y abre Nookly: sale en la tira de la barra. Los
 errores del panel o del script se ven en el propio panel.
 
 ## Publicar una versión
@@ -115,4 +115,4 @@ errores del panel o del script se ven en el propio panel.
 1. Cambia `version` en su `addon.json` y súbelo a `main`.
 2. Crea y sube el tag `<id>-vX.Y.Z` (`git tag dado-v0.1.0`, `git push origin dado-v0.1.0`).
 
-El workflow regenera `catalogo.json`, que es lo que lee nook.
+El workflow regenera `catalogo.json`, que es lo que lee Nookly.
