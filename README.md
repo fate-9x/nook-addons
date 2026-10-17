@@ -1,8 +1,16 @@
 # Addons de Nookly
 
 Addons para [Nookly](https://github.com/fate-9x/nook): paneles que se añaden a la barra (minijuegos,
-herramientas…) y que solo se cargan al abrirlos. Se instalan desde la configuración de Nookly, en la
-sección **Addons**.
+herramientas…) y que solo se cargan al abrirlos.
+
+## Instalar un addon
+
+- **Nookly (gratuita):** en *Configuración → Addons* salen los de este repositorio; se instalan con
+  **Instalar**.
+- **A mano (Nookly y Nookly Pro):** descarga el archivo `.nookaddon` del addon en
+  [Releases](https://github.com/fate-9x/nook-addons/releases) y, en *Configuración → Addons*, pulsa
+  **Añadir addon…** (o arrastra el archivo a la barra). Para actualizarlo, haz lo mismo con la
+  versión nueva. Nookly Pro solo tiene esta forma.
 
 ## Cómo es un addon
 
@@ -115,4 +123,5 @@ errores del panel o del script se ven en el propio panel.
 1. Cambia `version` en su `addon.json` y súbelo a `main`.
 2. Crea y sube el tag `<id>-vX.Y.Z` (`git tag dado-v0.1.0`, `git push origin dado-v0.1.0`).
 
-El workflow regenera `catalogo.json`, que es lo que lee Nookly.
+El workflow regenera `catalogo.json`, que es lo que lee Nookly, y publica el `.nookaddon` de esa
+versión en la release del tag (`herramientas/nookaddon.py`).

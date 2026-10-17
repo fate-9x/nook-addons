@@ -1,4 +1,5 @@
-# Al subir el tag de una versión de un addon (`<id>-vX.Y.Z`), regenera catalogo.json en main.
+# Al subir el tag de una versión de un addon (`<id>-vX.Y.Z`), regenera catalogo.json en main y
+# publica el .nookaddon de esa versión en la release del tag.
 name: catalogo
 
 on:
@@ -26,3 +27,14 @@ jobs:
           git add catalogo.json
           git commit -m "chore: actualizar el catálogo"
           git push origin main
+      # El archivo .nookaddon de esa versión, para añadirlo a mano en Nookly (en Nookly Pro, la
+      # única forma), en la release del tag.
+      - name: Publicar el .nookaddon en la release del tag
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          archivo=$(python3 herramientas/nookaddon.py "$TAG")
+          gh release create "$TAG" "$archivo" --title "$TAG" \
+            --notes "Descarga el archivo .nookaddon y añádelo en Nookly: Configuración → Addons → Añadir addon…, o arrástralo a la barra."
