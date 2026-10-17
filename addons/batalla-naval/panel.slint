@@ -1,0 +1,233 @@
+// Batalla naval: tu tablero a la izquierda y el del rival (nook o tu IA por MCP) a la derecha.
+import { Tema } from "@nook/tema.slint";
+import { BotonTexto } from "@nook/controles.slint";
+
+// Un tablero de 10×10 con sus coordenadas. Casillas: 0 agua (o sin disparar), 1 barco, 2 agua
+// tocada, 3 barco tocado, 4 barco hundido.
+component Tablero inherits Rectangle {
+    in property <[int]> casillas;
+    in property <int> ultima: -1;       // último disparo, que se marca
+    in property <bool> apuntable;       // se puede disparar a sus casillas sin tocar
+    callback disparar(int);
+    property <length> lado: 19px;
+    property <length> margen: 14px;     // columna de los números
+    property <length> cabecera: 12px;   // fila de las letras
+    width: self.margen + 10 * self.lado;
+    height: self.cabecera + 10 * self.lado;
+
+    for letra[c] in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]: Text {
+        x: root.margen + c * root.lado;
+        y: 0;
+        width: root.lado;
+        height: root.cabecera;
+        text: letra;
+        color: Tema.texto-tenue;
+        font-size: 9px;
+        horizontal-alignment: center;
+    }
+    for f in 10: Text {
+        x: 0;
+        y: root.cabecera + f * root.lado;
+        width: root.margen - 4px;
+        height: root.lado;
+        text: f + 1;
+        color: Tema.texto-tenue;
+        font-size: 9px;
+        horizontal-alignment: right;
+        vertical-alignment: center;
+    }
+    for estado[i] in root.casillas: Rectangle {
+        x: root.margen + mod(i, 10) * root.lado + 1px;
+        y: root.cabecera + floor(i / 10) * root.lado + 1px;
+        width: root.lado - 2px;
+        height: root.lado - 2px;
+        border-radius: 4px;
+        background: estado == 1 ? Tema.acento
+            : estado == 3 ? #E5484D
+            : estado == 4 ? #9E2F38
+            : area.enabled && area.has-hover ? Tema.capa-fuerte : Tema.capa;
+        border-width: i == root.ultima ? 1.5px : 0;
+        border-color: Tema.texto;
+        // Agua tocada: un punto.
+        if estado == 2: Rectangle {
+            width: 5px;
+            height: 5px;
+            border-radius: 2.5px;
+            background: Tema.texto-tenue;
+        }
+        // Barco tocado: un punto claro (los hundidos, más oscuros y sin él).
+        if estado == 3: Rectangle {
+            width: 7px;
+            height: 7px;
+            border-radius: 3.5px;
+            background: #FFFFFFD0;
+        }
+        area := TouchArea {
+            enabled: root.apuntable && estado == 0;
+            mouse-cursor: self.enabled ? pointer : default;
+            clicked => { root.disparar(i); }
+        }
+    }
+}
+
+// Opción del rival (nook o tu IA) antes de empezar.
+component Opcion inherits Rectangle {
+    in property <string> texto;
+    in property <bool> elegida;
+    callback clicked();
+    width: etiqueta.preferred-width + 16px;
+    height: 20px;
+    border-radius: 10px;
+    background: root.elegida ? Tema.acento : area.has-hover ? Tema.capa-fuerte : Tema.capa;
+    etiqueta := Text {
+        text: root.texto;
+        color: root.elegida ? Tema.sobre-acento : Tema.texto;
+        font-size: 11px;
+        font-weight: 600;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    area := TouchArea {
+        clicked => { root.clicked(); }
+    }
+}
+
+export component Panel inherits Window {
+    background: transparent;
+    default-font-family: Tema.fuente;
+
+    in property <[int]> mio;
+    in property <[int]> rival;
+    in property <int> ultima-mia: -1;
+    in property <int> ultima-rival: -1;
+    in property <int> fase;             // 0 colocar la flota, 1 jugando, 2 terminada
+    in property <bool> mi-turno;
+    in property <bool> rival-ia;
+    in property <string> texto-mio: "Tu flota";
+    in property <string> texto-rival: "Rival";
+    in property <string> texto-nook: "nook";
+    in property <string> texto-ia: "Tu IA";
+    in property <string> texto-recolocar: "Recolocar";
+    in property <string> texto-empezar: "Empezar";
+    in property <string> texto-abandonar: "Abandonar";
+    in property <string> texto-nueva: "Nueva partida";
+    in property <string> estado;        // el último disparo y de quién es el turno
+    in property <string> mensaje;       // lo último que ha dicho tu IA
+    in property <string> marcador;      // partidas ganadas y perdidas contra este rival
+    callback disparar(int);
+    callback recolocar();
+    callback empezar();
+    callback abandonar();
+    callback nueva-partida();
+    callback elegir-rival(bool);
+
+    Text {
+        x: 16px;
+        y: 8px;
+        height: 20px;
+        text: root.texto-mio;
+        color: Tema.texto;
+        font-size: 12px;
+        font-weight: 700;
+        vertical-alignment: center;
+    }
+    HorizontalLayout {
+        x: 260px;
+        y: 8px;
+        width: 204px;
+        height: 20px;
+        spacing: 6px;
+        alignment: start;
+        Text {
+            text: root.fase == 0 ? root.texto-rival : root.texto-rival + ": " + (root.rival-ia ? root.texto-ia : root.texto-nook);
+            color: Tema.texto;
+            font-size: 12px;
+            font-weight: 700;
+            vertical-alignment: center;
+        }
+        if root.fase == 0: Opcion {
+            texto: root.texto-nook;
+            elegida: !root.rival-ia;
+            clicked => { root.elegir-rival(false); }
+        }
+        if root.fase == 0: Opcion {
+            texto: root.texto-ia;
+            elegida: root.rival-ia;
+            clicked => { root.elegir-rival(true); }
+        }
+    }
+
+    Tablero {
+        x: 16px;
+        y: 32px;
+        casillas: root.mio;
+        ultima: root.ultima-mia;
+    }
+    Tablero {
+        x: 260px;
+        y: 32px;
+        casillas: root.rival;
+        ultima: root.ultima-rival;
+        apuntable: root.fase == 1 && root.mi-turno;
+        disparar(i) => { root.disparar(i); }
+    }
+
+    Text {
+        x: 16px;
+        y: 240px;
+        width: 220px;
+        height: 28px;
+        text: root.estado;
+        color: Tema.texto-suave;
+        font-size: 11px;
+        wrap: word-wrap;
+        overflow: elide;
+    }
+    Text {
+        x: 260px;
+        y: 240px;
+        width: 204px;
+        height: 28px;
+        text: root.mensaje;
+        color: Tema.texto;
+        font-size: 11px;
+        font-italic: true;
+        wrap: word-wrap;
+        overflow: elide;
+    }
+
+    HorizontalLayout {
+        x: 16px;
+        y: 270px;
+        width: 448px;
+        height: 30px;
+        spacing: 8px;
+        if root.fase == 0: BotonTexto {
+            texto: root.texto-recolocar;
+            clicked => { root.recolocar(); }
+        }
+        if root.fase == 0: BotonTexto {
+            texto: root.texto-empezar;
+            peligro: true;
+            clicked => { root.empezar(); }
+        }
+        if root.fase == 1: BotonTexto {
+            texto: root.texto-abandonar;
+            clicked => { root.abandonar(); }
+        }
+        if root.fase == 2: BotonTexto {
+            texto: root.texto-nueva;
+            peligro: true;
+            clicked => { root.nueva-partida(); }
+        }
+        Text {
+            horizontal-stretch: 1;
+            text: root.marcador;
+            color: Tema.texto-tenue;
+            font-size: 11px;
+            horizontal-alignment: right;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+    }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "batalla-naval",
+  "nombre": { "es": "Batalla naval", "en": "Battleship", "ja": "海戦ゲーム", "ko": "해전 게임" },
+  "descripcion": {
+    "es": "Hunde la flota de nook o la de tu IA, que juega por MCP.",
+    "en": "Sink nook's fleet, or your AI's, which plays over MCP.",
+    "ja": "nookの艦隊か、MCPで遊ぶAIの艦隊を撃沈しよう。",
+    "ko": "nook의 함대나 MCP로 플레이하는 AI의 함대를 격침하세요."
+  },
+  "version": "0.1.0",
+  "nook_minimo": "0.3.0",
+  "panel": { "ancho": 480, "alto": 308 },
+  "icono": "M2 14h20l-2.6 5.2A1.5 1.5 0 0 1 18 20H6a1.5 1.5 0 0 1-1.4-.8L2 14zm4-4h9v3H6v-3zm2-3.5h4v3H8v-3zM10 3h1.2v3.5H10V3zm5.5 8h5v1.2h-5V11z",
+  "herramientas": [
+    {
+      "nombre": "empezar",
+      "descripcion": "Empieza una partida de batalla naval contra el usuario en su barra de nook. Tableros de 10×10 (columnas A-J, filas 1-10). La flota de cada uno: portaaviones (5 casillas), acorazado (4), crucero (3), submarino (3) y destructor (2), en línea recta y sin tocarse entre ellos (tampoco en diagonal). Sin `flota`, la tuya se coloca al azar. Dispara primero el usuario y luego se alternan los turnos: después de empezar, usa esperar_turno.",
+      "parametros": {
+        "type": "object",
+        "properties": {
+          "flota": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Opcional: tus 5 barcos, cada uno como \"inicio-fin\". Por ejemplo: [\"A1-E1\", \"C3-C6\", \"H2-H4\", \"E8-G8\", \"J9-J10\"]."
+          },
+          "reiniciar": {
+            "type": "boolean",
+            "description": "Abandona la partida que esté en marcha y empieza otra."
+          }
+        }
+      }
+    },
+    {
+      "nombre": "ver_partida",
+      "descripcion": "Muestra la partida desde tu lado: tu tablero (tus barcos y los disparos del usuario), tus disparos al tablero del usuario, de quién es el turno y cuántos barcos quedan. Nunca muestra dónde están los barcos del usuario.",
+      "parametros": { "type": "object", "properties": {} }
+    },
+    {
+      "nombre": "disparar",
+      "descripcion": "Dispara a una casilla del tablero del usuario cuando es tu turno. Responde agua, tocado o hundido. Los turnos se alternan siempre: después de disparar, usa esperar_turno.",
+      "parametros": {
+        "type": "object",
+        "properties": {
+          "casilla": { "type": "string", "description": "La casilla, como \"B7\": columna de la A a la J y fila del 1 al 10." }
+        },
+        "required": ["casilla"]
+      }
+    },
+    {
+      "nombre": "esperar_turno",
+      "descripcion": "Espera a que el usuario dispare (hasta unos 45 segundos) y devuelve dónde disparó y cómo va la partida. Si ya es tu turno, responde enseguida. Si responde que todavía no ha pasado nada, vuelve a usarla.",
+      "parametros": { "type": "object", "properties": {} }
+    },
+    {
+      "nombre": "decir",
+      "descripcion": "Muestra en el panel de la partida un mensaje corto tuyo para el usuario (hasta 100 caracteres, en su idioma): para picarle, celebrar un hundido…",
+      "parametros": {
+        "type": "object",
+        "properties": {
+          "mensaje": { "type": "string", "description": "El mensaje." }
+        },
+        "required": ["mensaje"]
+      }
+    }
+  ]
+}
