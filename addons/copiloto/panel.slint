@@ -1,0 +1,64 @@
+// Copiloto: lo que te pregunta tu IA (con sus respuestas para elegir o la tuya) y su último aviso.
+import { Tema } from "@nook/tema.slint";
+import { BotonTexto, CampoTexto } from "@nook/controles.slint";
+
+export component Panel inherits Window {
+    background: transparent;
+    default-font-family: Tema.fuente;
+
+    in property <string> titulo: "Copiloto";
+    in property <string> texto;             // la pregunta o, si no hay, lo último que pasó
+    in property <[string]> opciones;
+    in property <bool> preguntando;
+    in property <string> mensaje;           // el último aviso de tu IA
+    in property <string> texto-otra: "Otra respuesta…";
+    in property <string> texto-enviar: "Enviar";
+    in-out property <string> libre;         // la respuesta que escribe el usuario
+    callback elegir(int);
+    callback enviar(string);
+
+    VerticalLayout {
+        padding: 16px;
+        padding-top: 10px;
+        spacing: 8px;
+        alignment: start;
+
+        Text {
+            text: root.titulo;
+            color: Tema.texto;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        Text {
+            text: root.texto;
+            color: root.preguntando ? Tema.texto : Tema.texto-suave;
+            font-size: 12px;
+            wrap: word-wrap;
+        }
+        for opcion[i] in root.opciones: BotonTexto {
+            texto: opcion;
+            clicked => { root.elegir(i); }
+        }
+        if root.preguntando: HorizontalLayout {
+            spacing: 8px;
+            CampoTexto {
+                horizontal-stretch: 1;
+                text <=> root.libre;
+                placeholder: root.texto-otra;
+                accepted => { root.enviar(root.libre); }
+            }
+            BotonTexto {
+                texto: root.texto-enviar;
+                peligro: true;
+                clicked => { root.enviar(root.libre); }
+            }
+        }
+        if root.mensaje != "": Text {
+            text: root.mensaje;
+            color: Tema.texto;
+            font-size: 11px;
+            font-italic: true;
+            wrap: word-wrap;
+        }
+    }
+}
