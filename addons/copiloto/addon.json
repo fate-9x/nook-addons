@@ -1,0 +1,43 @@
+{
+  "id": "copiloto",
+  "nombre": { "es": "Copiloto", "en": "Copilot", "ja": "コパイロット", "ko": "코파일럿" },
+  "descripcion": {
+    "es": "Tu IA te pregunta y te avisa en la barra mientras programa, por MCP.",
+    "en": "Your AI asks you things and lets you know in the bar while it codes, over MCP.",
+    "ja": "AIがコーディング中にMCPでバーから質問やお知らせをします。",
+    "ko": "AI가 코딩하는 동안 MCP로 바에서 질문하고 알려 줍니다."
+  },
+  "version": "0.1.0",
+  "nook_minimo": "0.3.0",
+  "panel": { "ancho": 400, "alto": 340 },
+  "icono": "M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM6.5 10a1.5 1.5 0 0 0 3 0a1.5 1.5 0 0 0-3 0zM10.5 10a1.5 1.5 0 0 0 3 0a1.5 1.5 0 0 0-3 0zM14.5 10a1.5 1.5 0 0 0 3 0a1.5 1.5 0 0 0-3 0z",
+  "herramientas": [
+    {
+      "nombre": "preguntar",
+      "descripcion": "Pregunta algo al usuario en su barra de Nookly, sin que tenga que mirar tu ventana: le sale la pregunta y, si las das, hasta 4 respuestas para elegir con un clic (también puede escribir la suya). Espera su respuesta (hasta unos 45 segundos) y la devuelve. Si responde que todavía no ha pasado nada, vuelve a usarla con la misma pregunta para seguir esperando. Úsala cuando necesites que el usuario decida algo para seguir.",
+      "parametros": {
+        "type": "object",
+        "properties": {
+          "pregunta": { "type": "string", "description": "La pregunta, corta y en el idioma del usuario (hasta 240 caracteres)." },
+          "opciones": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Opcional: hasta 4 respuestas posibles, cortas (hasta 50 caracteres cada una)."
+          }
+        },
+        "required": ["pregunta"]
+      }
+    },
+    {
+      "nombre": "avisar",
+      "descripcion": "Avisa al usuario en su barra de Nookly con un mensaje corto (hasta 200 caracteres, en su idioma), y su personaje se lo indica: que has terminado una tarea, que necesitas su permiso en tu ventana, que algo ha fallado… Úsala al terminar una tarea larga, para que se entere aunque esté en otra ventana. No espera respuesta.",
+      "parametros": {
+        "type": "object",
+        "properties": {
+          "mensaje": { "type": "string", "description": "El mensaje." }
+        },
+        "required": ["mensaje"]
+      }
+    }
+  ]
+}
