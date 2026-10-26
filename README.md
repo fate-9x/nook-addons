@@ -42,6 +42,9 @@ Cada addon está en `addons/<id>/`:
 - `id`: el nombre de su carpeta (minúsculas, números y `-`).
 - `nook_minimo` (opcional): la primera versión de Nookly con la que funciona. Las anteriores lo
   muestran como incompatible y no lo dejan instalar.
+- `panel`: su tamaño. Con `"ajustar_alto": true`, el alto sigue a lo que ocupa el contenido del
+  panel (su alto preferido, por ejemplo el de un `VerticalLayout`), con `alto` como máximo: crece
+  y se encoge solo. Las versiones de Nookly que no lo conocen lo muestran siempre con `alto`.
 - `icono`: un trazado SVG relleno en una caja de 24×24; Nookly lo pinta del color del tema.
 - `herramientas`: lo que puede usar la IA del usuario por MCP (ver más abajo). Los parámetros son
   un JSON Schema.

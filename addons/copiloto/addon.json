@@ -9,7 +9,7 @@
   },
   "version": "0.1.0",
   "nook_minimo": "0.3.0",
-  "panel": { "ancho": 400, "alto": 340 },
+  "panel": { "ancho": 400, "alto": 340, "ajustar_alto": true },
   "icono": "M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM6.5 10a1.5 1.5 0 0 0 3 0a1.5 1.5 0 0 0-3 0zM10.5 10a1.5 1.5 0 0 0 3 0a1.5 1.5 0 0 0-3 0zM14.5 10a1.5 1.5 0 0 0 3 0a1.5 1.5 0 0 0-3 0z",
   "herramientas": [
     {
