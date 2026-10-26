@@ -26,6 +26,30 @@
       }
     },
     {
+      "id": "copiloto",
+      "nombre": {
+        "es": "Copiloto",
+        "en": "Copilot",
+        "ja": "コパイロット",
+        "ko": "코파일럿"
+      },
+      "descripcion": {
+        "es": "Tu IA te pregunta y te avisa en la barra mientras programa, por MCP.",
+        "en": "Your AI asks you things and lets you know in the bar while it codes, over MCP.",
+        "ja": "AIがコーディング中にMCPでバーから質問やお知らせをします。",
+        "ko": "AI가 코딩하는 동안 MCP로 바에서 질문하고 알려 줍니다."
+      },
+      "version": "0.1.0",
+      "nook_minimo": "0.3.0",
+      "icono": "M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM6.5 10a1.5 1.5 0 0 0 3 0a1.5 1.5 0 0 0-3 0zM10.5 10a1.5 1.5 0 0 0 3 0a1.5 1.5 0 0 0-3 0zM14.5 10a1.5 1.5 0 0 0 3 0a1.5 1.5 0 0 0-3 0z",
+      "tag": "copiloto-v0.1.0",
+      "archivos": {
+        "addon.json": "f03eec026c00044945c1bd30ce0411e687895173f05ab856d8f49310d7fc3cef",
+        "logica.rhai": "5ef6e14a2ad0a84abcd6022fb3ece1e72a0c7a5147d91937e8b7db53cdf1c861",
+        "panel.slint": "53b91e963dfa05b57547459639eb7e46057832259fb27b15a0c2b364b288c1dd"
+      }
+    },
+    {
       "id": "dado",
       "nombre": {
         "es": "Dado",
